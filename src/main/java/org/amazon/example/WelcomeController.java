@@ -10,7 +10,7 @@ public class WelcomeController {
 
     private final WelcomeService welcomeService;
 
-    @Autowired //inject the WelcomeService dependency into this controller automatically
+    @Autowired //makes spring automatically search for the bean from the service layer. inject the WelcomeService dependency into this controller automatically
     public WelcomeController(WelcomeService welcomeService){
         this.welcomeService = welcomeService;
     }
