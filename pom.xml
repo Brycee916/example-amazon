@@ -47,6 +47,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!--Maven profile activate using cmd-->
+				<configuration>
+					<profiles>
+						<profile>dev</profile>
+						<profile>prod</profile>
+					</profiles>
+				</configuration>
+				<!--profile activate end-->
 			</plugin>
 						<!-- Checkstyle Plugin Starts --> 
 			<plugin> 
@@ -68,7 +76,6 @@
 					<linkXRef></linkXRef> 
 				</configuration> 
 			</plugin>
-			<!-- Checkstyle Plugin Ends--> 
 		</plugins>
 	</build>
 
