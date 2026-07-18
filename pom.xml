@@ -50,8 +50,7 @@
 				<!--Maven profile activate using cmd-->
 				<configuration>
 					<profiles>
-						<profile>dev</profile>
-						<profile>prod</profile>
+						<profile>spring-boot.run.profiles</profile>
 					</profiles>
 				</configuration>
 				<!--profile activate end-->
