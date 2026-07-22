@@ -20,4 +20,11 @@ public class UserService {
         //store the user in the map
         users.put(user.getUsername(), user);
     }
+    public User findByUsername(String username){
+        return users.get(username);
+    }
+
+    public Map<String, User> getAllUsers(){
+        return users;
+    }
 }
