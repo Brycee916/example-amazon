@@ -13,4 +13,11 @@ public class UserService {
     public UserService(PasswordEncoder passwordEncoder){
         this.passwordEncoder = passwordEncoder;
     }
+
+    public void registerUser(User user){
+        //encode the password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //store the user in the map
+        users.put(user.getUsername(), user);
+    }
 }
