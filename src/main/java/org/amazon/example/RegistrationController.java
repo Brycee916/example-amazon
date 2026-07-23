@@ -2,7 +2,10 @@ package org.amazon.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class RegistrationController {
@@ -20,5 +23,15 @@ public class RegistrationController {
 
     //handle the logic
     @PostMapping("/register")
-    
+    public String registerUser(@ModelAttribute("user") User user, Model model){
+        try {
+            userService.registerUser(user);
+            model.addAttribute("message", "Registeration successful, please login");
+            return "login";
+        } catch (Exception e) {
+            model.addAttribute("message", "Error occurred during registration. Please try again later");
+            return "register";
+        }
+
+    }
 }
