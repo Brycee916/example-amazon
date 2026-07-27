@@ -19,11 +19,7 @@
 # ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------
-<<<<<<< HEAD
 # Apache Maven Wrapper startup batch script, version 3.3.4
-=======
-# Apache Maven Wrapper startup batch script, version 3.3.2
->>>>>>> c353784 (some changes)
 #
 # Optional ENV vars
 # -----------------
@@ -52,28 +48,28 @@ set_java_home() {
     if [ -x "$JAVA_HOME/jre/sh/java" ]; then
       # IBM's JDK on AIX uses strange locations for the executables
       JAVACMD="$JAVA_HOME/jre/sh/java"
-      JAVACCMD="$JAVA_HOME/jre/sh/javac"
+      JAVACCMD="$JAVA_HOME/bin/javac"
     else
       JAVACMD="$JAVA_HOME/bin/java"
       JAVACCMD="$JAVA_HOME/bin/javac"
 
       if [ ! -x "$JAVACMD" ] || [ ! -x "$JAVACCMD" ]; then
         echo "The JAVA_HOME environment variable is not defined correctly, so mvnw cannot run." >&2
-        echo "JAVA_HOME is set to \"$JAVA_HOME\", but \"\$JAVA_HOME/bin/java\" or \"\$JAVA_HOME/bin/javac\" does not exist." >&2
+        echo "JAVA_HOME is set to \"$JAVA_HOME\", but \"$JAVA_HOME/bin/java\" or \"$JAVA_HOME/bin/javac\" does not exist." >&2
         return 1
       fi
     fi
   else
-    JAVACMD="$(
+    JAVACMD="$((
       'set' +e
       'unset' -f command 2>/dev/null
       'command' -v java
-    )" || :
-    JAVACCMD="$(
+    ))" || :
+    JAVACCMD="$((
       'set' +e
       'unset' -f command 2>/dev/null
       'command' -v javac
-    )" || :
+    ))" || :
 
     if [ ! -x "${JAVACMD-}" ] || [ ! -x "${JAVACCMD-}" ]; then
       echo "The java/javac command does not exist in PATH nor is JAVA_HOME set, so mvnw cannot run." >&2
@@ -109,25 +105,17 @@ trim() {
   printf "%s" "${1}" | tr -d '[:space:]'
 }
 
-<<<<<<< HEAD
 scriptDir="$(dirname "$0")"
 scriptName="$(basename "$0")"
 
-=======
->>>>>>> c353784 (some changes)
 # parse distributionUrl and optional distributionSha256Sum, requires .mvn/wrapper/maven-wrapper.properties
 while IFS="=" read -r key value; do
   case "${key-}" in
   distributionUrl) distributionUrl=$(trim "${value-}") ;;
   distributionSha256Sum) distributionSha256Sum=$(trim "${value-}") ;;
   esac
-<<<<<<< HEAD
 done <"$scriptDir/.mvn/wrapper/maven-wrapper.properties"
 [ -n "${distributionUrl-}" ] || die "cannot read distributionUrl property in $scriptDir/.mvn/wrapper/maven-wrapper.properties"
-=======
-done <"${0%/*}/.mvn/wrapper/maven-wrapper.properties"
-[ -n "${distributionUrl-}" ] || die "cannot read distributionUrl property in ${0%/*}/.mvn/wrapper/maven-wrapper.properties"
->>>>>>> c353784 (some changes)
 
 case "${distributionUrl##*/}" in
 maven-mvnd-*bin.*)
@@ -145,11 +133,7 @@ maven-mvnd-*bin.*)
   distributionUrl="${distributionUrl%-bin.*}-$distributionPlatform.zip"
   ;;
 maven-mvnd-*) MVN_CMD=mvnd.sh _MVNW_REPO_PATTERN=/maven/mvnd/ ;;
-<<<<<<< HEAD
 *) MVN_CMD="mvn${scriptName#mvnw}" _MVNW_REPO_PATTERN=/org/apache/maven/ ;;
-=======
-*) MVN_CMD="mvn${0##*/mvnw}" _MVNW_REPO_PATTERN=/org/apache/maven/ ;;
->>>>>>> c353784 (some changes)
 esac
 
 # apply MVNW_REPOURL and calculate MAVEN_HOME
@@ -246,11 +230,7 @@ if [ -n "${distributionSha256Sum-}" ]; then
     echo "Please disable validation by removing 'distributionSha256Sum' from your maven-wrapper.properties." >&2
     exit 1
   elif command -v sha256sum >/dev/null; then
-<<<<<<< HEAD
     if echo "$distributionSha256Sum  $TMP_DOWNLOAD_DIR/$distributionUrlName" | sha256sum -c - >/dev/null 2>&1; then
-=======
-    if echo "$distributionSha256Sum  $TMP_DOWNLOAD_DIR/$distributionUrlName" | sha256sum -c >/dev/null 2>&1; then
->>>>>>> c353784 (some changes)
       distributionSha256Result=true
     fi
   elif command -v shasum >/dev/null; then
@@ -258,63 +238,15 @@ if [ -n "${distributionSha256Sum-}" ]; then
       distributionSha256Result=true
     fi
   else
-    echo "Checksum validation was requested but neither 'sha256sum' or 'shasum' are available." >&2
-    echo "Please install either command, or disable validation by removing 'distributionSha256Sum' from your maven-wrapper.properties." >&2
+    echo "Unable to find a command to compute sha256." >&2
     exit 1
   fi
-  if [ $distributionSha256Result = false ]; then
-    echo "Error: Failed to validate Maven distribution SHA-256, your Maven distribution might be compromised." >&2
-    echo "If you updated your Maven version, you need to update the specified distributionSha256Sum property." >&2
+
+  if [ "$distributionSha256Result" = false ]; then
+    echo "Checksum validation failed." >&2
     exit 1
   fi
 fi
 
-# unzip and move
-if command -v unzip >/dev/null; then
-  unzip ${__MVNW_QUIET_UNZIP:+"$__MVNW_QUIET_UNZIP"} "$TMP_DOWNLOAD_DIR/$distributionUrlName" -d "$TMP_DOWNLOAD_DIR" || die "failed to unzip"
-else
-  tar xzf${__MVNW_QUIET_TAR:+"$__MVNW_QUIET_TAR"} "$TMP_DOWNLOAD_DIR/$distributionUrlName" -C "$TMP_DOWNLOAD_DIR" || die "failed to untar"
-fi
-<<<<<<< HEAD
-
-# Find the actual extracted directory name (handles snapshots where filename != directory name)
-actualDistributionDir=""
-
-# First try the expected directory name (for regular distributions)
-if [ -d "$TMP_DOWNLOAD_DIR/$distributionUrlNameMain" ]; then
-  if [ -f "$TMP_DOWNLOAD_DIR/$distributionUrlNameMain/bin/$MVN_CMD" ]; then
-    actualDistributionDir="$distributionUrlNameMain"
-  fi
-fi
-
-# If not found, search for any directory with the Maven executable (for snapshots)
-if [ -z "$actualDistributionDir" ]; then
-  # enable globbing to iterate over items
-  set +f
-  for dir in "$TMP_DOWNLOAD_DIR"/*; do
-    if [ -d "$dir" ]; then
-      if [ -f "$dir/bin/$MVN_CMD" ]; then
-        actualDistributionDir="$(basename "$dir")"
-        break
-      fi
-    fi
-  done
-  set -f
-fi
-
-if [ -z "$actualDistributionDir" ]; then
-  verbose "Contents of $TMP_DOWNLOAD_DIR:"
-  verbose "$(ls -la "$TMP_DOWNLOAD_DIR")"
-  die "Could not find Maven distribution directory in extracted archive"
-fi
-
-verbose "Found extracted Maven distribution directory: $actualDistributionDir"
-printf %s\\n "$distributionUrl" >"$TMP_DOWNLOAD_DIR/$actualDistributionDir/mvnw.url"
-mv -- "$TMP_DOWNLOAD_DIR/$actualDistributionDir" "$MAVEN_HOME" || [ -d "$MAVEN_HOME" ] || die "fail to move MAVEN_HOME"
-=======
-printf %s\\n "$distributionUrl" >"$TMP_DOWNLOAD_DIR/$distributionUrlNameMain/mvnw.url"
-mv -- "$TMP_DOWNLOAD_DIR/$distributionUrlNameMain" "$MAVEN_HOME" || [ -d "$MAVEN_HOME" ] || die "fail to move MAVEN_HOME"
->>>>>>> c353784 (some changes)
-
-clean || :
+# Finish
 exec_maven "$@"

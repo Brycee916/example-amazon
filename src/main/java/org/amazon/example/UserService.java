@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
     //create in memory bc no db yet of the users
     private final Map<String, User> users = new HashMap<>();
@@ -12,6 +14,7 @@ public class UserService {
 
     public UserService(PasswordEncoder passwordEncoder){
         this.passwordEncoder = passwordEncoder;
+        
     }
 
     public void registerUser(User user){
