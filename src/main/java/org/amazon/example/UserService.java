@@ -1,30 +1,37 @@
 package org.amazon.example;
 
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
+@Service
 public class UserService {
-    //create in memory bc no db yet of the users
+
     private final Map<String, User> users = new HashMap<>();
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(PasswordEncoder passwordEncoder){
+    public UserService(PasswordEncoder passwordEncoder) {
+
         this.passwordEncoder = passwordEncoder;
+
+        //TODO 1:  Add a default admin user with username admin, password admin123 and role ADMIN
+        User admin = new User("admin", "admin123", "ADMIN");
+        registerUser(admin);
+        //TODO 2: Add a default regular user with username user, password user123 and role USER;
+        User regular = new User("user", "user123", "USER");
+        registerUser(regular);
     }
 
-    public void registerUser(User user){
-        //encode the password before saving
+    public void registerUser(User user) {
+        // Encode the password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //store the user in the map
-        users.put(user.getUsername(), user);
-    }
-    public User findByUsername(String username){
-        return users.get(username);
+        users.put(user.getUsername(), user);  // Store the user in the map
     }
 
-    public Map<String, User> getAllUsers(){
-        return users;
+    public User findByUsername(String username) {
+        return users.get(username);
     }
 }
