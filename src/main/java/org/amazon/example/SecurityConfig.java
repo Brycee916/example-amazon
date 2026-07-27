@@ -21,12 +21,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/register", "/login").permitAll()  // Allow public access to these pages
-                .anyRequest().authenticated()                         // Secure all other pages
+                    .requestMatchers("/register", "/login").permitAll()  // Allow public access to these pages
+                    //TODO 3: Only ADMIN can access /admin/* url
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    //TODO 4: Only USER can access /user/* url
+                    .requestMatchers("/user/**").hasRole("USER")
+                    .anyRequest().authenticated()                         // Secure all other pages
                 .and()
                 .formLogin()                                             // Enable form login
-                .loginPage("/login")
-                .defaultSuccessUrl("/welcome", true)                 // Redirect after successful login
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/welcome", true)                 // Redirect after successful login
                 .and()
                 .logout().permitAll();
 

@@ -13,25 +13,16 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
-    //display the registration form
     @GetMapping("/register")
-    public String showRegistrationForm(Model model){
-
+    public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
-        return "register"; //routes it
+        return "register";
     }
 
-    //handle the logic
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") User user, Model model){
-        try {
-            userService.registerUser(user);
-            model.addAttribute("message", "Registeration successful, please login");
-            return "login";
-        } catch (Exception e) {
-            model.addAttribute("message", "Error occurred during registration. Please try again later");
-            return "register";
-        }
-
+    public String registerUser(@ModelAttribute("user") User user, Model model) {
+        userService.registerUser(user);  // Register the user using the service
+        model.addAttribute("message", "Registration successful! Please login.");
+        return "login";
     }
 }
