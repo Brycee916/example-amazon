@@ -20,18 +20,22 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
                 .authorizeHttpRequests()
-                    .requestMatchers("/register", "/login").permitAll()  // Allow public access to these pages
-                    //TODO 3: Only ADMIN can access /admin/* url
-                    .requestMatchers("/admin/**").hasRole("ADMIN")
-                    //TODO 4: Only USER can access /user/* url
-                    .requestMatchers("/user/**").hasRole("USER")
-                    .anyRequest().authenticated()                         // Secure all other pages
+                .requestMatchers("/register", "/login").permitAll()  // Allow public access to these pages
+                .requestMatchers("/admin/**").hasRole("ADMIN")        // Only ADMIN can access /admin/*
+                .requestMatchers("/user/**").hasRole("USER")          // Only USER can access /user/*
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()                                             // Enable form login
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/welcome", true)                 // Redirect after successful login
+                // Configure Basic Authentication for the API endpoints (like /products)
+                .httpBasic()
+                .and()
+                // Disable form login for API endpoints to avoid redirection
+                .csrf().disable()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/welcome", true)
                 .and()
                 .logout().permitAll();
 
