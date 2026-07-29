@@ -26,6 +26,10 @@ public class SecurityConfig {
                 .requestMatchers("/register", "/login").permitAll()  // Allow public access to these pages
                 .requestMatchers("/admin/**").hasRole("ADMIN")        // Only ADMIN can access /admin/*
                 .requestMatchers("/user/**").hasRole("USER")          // Only USER can access /user/*
+                .requestMatchers("/actuator/health/**").hasRole("ADMIN")
+                .requestMatchers("/actuator/info**").hasRole("ADMIN")
+                .requestMatchers("/actuator/metrics").hasRole("ADMIN")
+                .requestMatchers("/actuator/env").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 // Configure Basic Authentication for the API endpoints (like /products)
