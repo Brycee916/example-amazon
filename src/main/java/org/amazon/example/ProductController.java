@@ -19,6 +19,7 @@ public class ProductController {
     @Autowired //auto injects the class
     private ProductService productService;
 
+    //products api
     @GetMapping("/products")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
