@@ -25,6 +25,7 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    //gets product id
     @PostMapping("/products/new/{id}")
     public Product addProduct(@RequestBody Product product) {
         return productService.addProduct(product);
