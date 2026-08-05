@@ -31,11 +31,13 @@ public class ProductController {
         return productService.addProduct(product);
     }
 
+    //gets a product by id
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
 
+    // updates a product by it's id using a new product object
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
         return productService.updateProduct(id, updatedProduct);
