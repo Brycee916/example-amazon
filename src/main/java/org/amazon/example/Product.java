@@ -1,14 +1,16 @@
 package org.amazon.example;
 
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.Objects;
 
 @Entity
 public class Product {
 
+    //auto generate the id, id will be primary key id in db
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
