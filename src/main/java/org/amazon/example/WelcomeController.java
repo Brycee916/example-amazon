@@ -9,6 +9,7 @@ public class WelcomeController {
 
     private final WelcomeService welcomeService;
 
+    //class note really needed
     @Autowired
     public WelcomeController(WelcomeService welcomeService) {
         this.welcomeService = welcomeService;
