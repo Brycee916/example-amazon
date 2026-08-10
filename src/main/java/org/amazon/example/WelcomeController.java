@@ -15,6 +15,7 @@ public class WelcomeController {
         this.welcomeService = welcomeService;
     }
 
+    //welcome api
     @GetMapping("/welcome")
     public String getWelcomeMessage() {
         return welcomeService.getWelcomeMessage();
