@@ -38,6 +38,7 @@ public class User {
         this.role = role;
     }
 
+    //uses this child toString() function
     @Override
     public String toString() {
         return "User{" +
