@@ -1,7 +1,9 @@
 package org.amazon.example;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,5 +42,9 @@ public class UserService {
 
     public User findByUsername(String username) {
         return users.get(username);
+    }
+    
+    public List<User> getAllUsers(){
+        return new ArrayList<> (users.values());
     }
 }
