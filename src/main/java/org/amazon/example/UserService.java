@@ -71,4 +71,8 @@ public class UserService {
     public User updateUser(long id, User user){
         return usersById.put(id, user);
     }
+
+    public void deleteUser(long id){
+        usersById.remove(id);
+    }
 }
