@@ -1,6 +1,5 @@
 package org.amazon.example;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,39 +11,60 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    private final Map<String, User> users = new HashMap<>();
+    private final Map<Long, User> usersById = new HashMap<>();
+    private final Map<String, User> usersByUsername = new HashMap<>();
     private final PasswordEncoder passwordEncoder;
+    private long nextId = 1L;
 
     public UserService(PasswordEncoder passwordEncoder) {
-
         this.passwordEncoder = passwordEncoder;
 
-        //TODO 1:  Add a default admin user with username admin, password admin123 and role ADMIN
         User admin = new User("admin", "admin123", "ADMIN");
         registerUser(admin);
-        //TODO 2: Add a default regular user with username user, password user123 and role USER;
+
         User regular = new User("user", "user123", "USER");
         registerUser(regular);
     }
 
     public User createUser(User user) {
-        // Encode the password before saving
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        users.put(user.getUsername(), user);  // Store the user in the map
-        return users.get(user);
+        user.setId(nextId++);
+
+        usersById.put(user.getId(), user);
+        usersByUsername.put(user.getUsername(), user);
+        return user;
     }
 
     public void registerUser(User user) {
-        // Encode the password before saving
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        users.put(user.getUsername(), user);  // Store the user in the map
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+
+        if (user.getPassword() != null && !user.getPassword().startsWith("$2a$")) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        if (user.getId() == 0L) {
+            user.setId(nextId++);
+        }
+
+        usersById.put(user.getId(), user);
+        usersByUsername.put(user.getUsername(), user);
     }
 
     public User findByUsername(String username) {
-        return users.get(username);
+        return usersByUsername.get(username);
     }
-    
-    public List<User> getAllUsers(){
-        return new ArrayList<> (users.values());
+
+    public List<User> getAllUsers() {
+        return new ArrayList<>(usersById.values());
+    }
+
+    public User getUserById(long id) {
+        return usersById.get(id);
     }
 }

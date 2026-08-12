@@ -1,9 +1,13 @@
 package org.amazon.example;
 
 public class User {
+    private long id;
     private String username;
     private String password;
     private String role;
+
+    public User() {
+    }
 
     public User(String username, String password, String role) {
         this.username = username;
@@ -11,7 +15,19 @@ public class User {
         this.role = role;
     }
 
-    public User() {
+    public User(long id, String username, String password, String role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -38,11 +54,11 @@ public class User {
         this.role = role;
     }
 
-    //uses this child toString() function
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 '}';
