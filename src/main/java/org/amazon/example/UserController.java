@@ -42,12 +42,12 @@ public class UserController {
         if (user != null){
             return ResponseEntity.ok(user);
         }
-        return ResponseEntity.notFound().build();
+        return org.springframework.http.ResponseEntity.notFound().build();
 
     }
 
     @PutMapping("/{id}")
-    pubic ResponseEntity<Object> updateUser(@PathVariable long id, @RequestBody User userDetails){
+    public ResponseEntity<Object> updateUser(@PathVariable long id, @RequestBody User userDetails){
         User updatedUser = userService.updateUser(id, userDetails);
         if(updatedUser != null){
             return ResponseEntity.ok(updatedUser);
