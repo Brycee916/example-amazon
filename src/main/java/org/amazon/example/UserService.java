@@ -67,4 +67,8 @@ public class UserService {
     public User getUserById(long id) {
         return usersById.get(id);
     }
+
+    public User updateUser(long id, User user){
+        return usersById.put(id, user);
+    }
 }
