@@ -20,6 +20,11 @@ public class UserController {
 
     private final UserService userService;
 
+    //all restful apis
+    // get - idempotent
+    // post - not
+    // put - idempotent
+    // delete - idempotent
     @Autowired
     public UserController(UserService userService){
         this.userService = userService;
